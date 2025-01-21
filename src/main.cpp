@@ -16,7 +16,7 @@ void setup() {
 
 void moveAltStepper() {
   if (going_up) {
-    alt_stepper.step(3);
+    alt_stepper.step(12);
     alt_steps += 3;
     delay(10000); // 10 seconds
 
@@ -25,7 +25,7 @@ void moveAltStepper() {
       going_up = false;
     }
   } else {
-    alt_stepper.step(-3);
+    alt_stepper.step(-12);
     alt_steps -= 3;
     delay(10000); // 10 seconds
 
