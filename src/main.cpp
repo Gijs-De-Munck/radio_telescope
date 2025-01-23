@@ -4,8 +4,8 @@
 Stepper alt_stepper(200, 2, 3, 4, 5);
 Stepper az_stepper(200, 6, 7, 8, 9);
 
-int alt_steps = 0;
-bool going_up = true;
+int current_alt_position = 0;
+int current_az_position = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -20,23 +20,13 @@ void loop() {
     int alt_step_value = input.substring(0, commaIndex).toInt();
     int az_step_value = input.substring(commaIndex + 1).toInt();
 
-    if (going_up) {
-      alt_stepper.step(alt_step_value);
-      alt_steps += alt_step_value;
-      delay(10000); // 10 seconds
+    int alt_steps_to_move = alt_step_value - current_alt_position;
+    int az_steps_to_move = az_step_value - current_az_position;
 
-      if (alt_steps >= 201) {
-        az_stepper.step(az_step_value); // Move the second motor
-        going_up = false;
-      }
-    } else {
-      alt_stepper.step(-alt_step_value);
-      alt_steps -= alt_step_value;
-      delay(10000); // 10 seconds
+    alt_stepper.step(alt_steps_to_move);
+    az_stepper.step(az_steps_to_move);
 
-      if (alt_steps <= 0) {
-        going_up = true;
-      }
-    }
+    current_alt_position = alt_step_value;
+    current_az_position = az_step_value;
   }
 }
