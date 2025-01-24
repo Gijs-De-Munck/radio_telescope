@@ -7,25 +7,14 @@ Stepper az_stepper(200, 6, 7, 8, 9); //change this to the correct pins
 int current_alt_position = 0;
 int current_az_position = 0;
 
-/**
- * @brief Initializes the serial communication and sets the speed for the stepper motors.
- * 
- * This function is called once when the program starts. It sets up the serial communication
- * with a baud rate of 9600 and configures the speed for both the altitude and azimuth stepper motors.
- */
+
 void setup() {
   Serial.begin(9600); // Initialize serial communication at 9600 baud rate
   alt_stepper.setSpeed(5); // Set speed for altitude stepper motor
   az_stepper.setSpeed(5); // Set speed for azimuth stepper motor
 }
 
-/**
- * @brief Main loop that continuously checks for serial input and moves the stepper motors accordingly.
- * 
- * This function runs repeatedly after the setup function. It checks if there is any serial input available.
- * If there is, it reads the input, parses the altitude and azimuth step values, calculates the steps to move,
- * and commands the stepper motors to move to the new positions.
- */
+
 void loop() {
   if (Serial.available() > 0) {
     String input = Serial.readStringUntil('\n'); // Read the input string until a newline character is encountered
