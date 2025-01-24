@@ -45,26 +45,3 @@ void loop() {
     current_az_position = az_step_value; // Update the current azimuth position
   }
 }
-void setup() {
-  Serial.begin(9600);
-  alt_stepper.setSpeed(5);
-  az_stepper.setSpeed(5);
-}
-
-void loop() {
-  if (Serial.available() > 0) {
-    String input = Serial.readStringUntil('\n');
-    int commaIndex = input.indexOf(',');
-    int alt_step_value = input.substring(0, commaIndex).toInt();
-    int az_step_value = input.substring(commaIndex + 1).toInt();
-
-    int alt_steps_to_move = alt_step_value - current_alt_position;
-    int az_steps_to_move = az_step_value - current_az_position;
-
-    alt_stepper.step(alt_steps_to_move);
-    az_stepper.step(az_steps_to_move);
-
-    current_alt_position = alt_step_value;
-    current_az_position = az_step_value;
-  }
-}
